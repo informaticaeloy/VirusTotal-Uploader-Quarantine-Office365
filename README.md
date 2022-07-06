@@ -6,6 +6,7 @@ Script en Python que automatiza el proceso de:<br>
 4 - añade un voto negativo<br>
 5 - lo añade a nuestra Collection<br>
 <br><br>
-<img src="https://github.com/informaticaeloy/VirusTotal-Uploader-Quarantine-Office365/blob/main/virus_total_logo.png" widht="50%" height="auto">
+<img src="https://github.com/informaticaeloy/VirusTotal-Uploader-Quarantine-Office365/blob/main/virus_total_logo.png" width="50%" height="50%">
+
 <br>
 *** En desarrollo ***

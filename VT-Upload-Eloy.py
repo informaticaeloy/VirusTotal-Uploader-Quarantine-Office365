@@ -1,6 +1,7 @@
 
 import requests
 import json
+import datetime
 
 
 ## PREPARACIÓN DEL ENTORNO PARA SUBIR UN FICHERO A VT
@@ -9,9 +10,11 @@ url_upload = "https://www.virustotal.com/api/v3/files"
 files = {"file": open("Transaction.doc", "rb")}
 headers = {
     "Accept": "application/json",
-    "x-apikey": "dc586a5b1ccd2f46da6a2597cedf2fake31ec697529375925d1d95658459a4a3e925" ## API KEY PERSONAL
-    
-
+    "x-apikey": "dc586b6cfake2f46da6a259f231ee697529375925fakeb1d95400459a4a3e925"
+}
+ID_de_la_coleccion = "9554826dd994ffake8b5aeb43eb010b041865cf5cafake5880b64283ca04567b"
+ahora = datetime.datetime.now()
+nueva_descripcion = "Mis detecciones de Malware en Office365 -> Last Update : "+str(ahora.strftime("%a, %d-%b-%Y %H:%M:%S CET"))
 ## SUBIMOS EL FICHERO E IMPRIMIMOS LA RESPUESTA POR PANTALLA
 response = requests.post(url_upload, files=files, headers=headers)
 print(response.text)
@@ -84,13 +87,30 @@ url = "https://www.virustotal.com/api/v3/files/"+sha256_del_upload+"/votes"
 payload = {"data": {
         "type": "vote",
         "attributes": {"verdict": "malicious"}
-    }}
-headers = {
-    "Accept": "application/json",
-    "x-apikey": "dc586b6c15312f46da6a2597cedf231ee697529375925b1d95400459a4a3e925",
-    "Content-Type": "application/json"
+    }
 }
 
+
 response = requests.post(url, json=payload, headers=headers)
+
+print(response.text)
+
+## AÑADIMOS EL FICHERO A UNA COLLECION PROPIA
+## wiki -> https://developers.virustotal.com/reference/collectionsid-2
+
+url = "https://www.virustotal.com/api/v3/collections/"+ID_de_la_coleccion
+
+payload = {
+    "data": {
+        "attributes": {
+            "name": "MIS DETECCIONES",
+            "description": nueva_descripcion
+        },
+        "raw_items": sha256_del_upload,
+        "type": "collection"
+    }
+}
+
+response = requests.patch(url, json=payload, headers=headers)
 
 print(response.text)
